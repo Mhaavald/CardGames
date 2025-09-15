@@ -8,10 +8,12 @@ using CardGames.Simulation;
 
 namespace CardGames.Blackjack
 {
-    public class Blackjack : CardGame
+    public class Blackjack : CardGame, IGameResults
     {
         private const int BlackjackValue = 21;
         private const int DealerStandThreshold = 17;
+
+        public override string Name => "Blackjack";
 
         public override string Rules => 
             "Blackjack Rules:\n" +

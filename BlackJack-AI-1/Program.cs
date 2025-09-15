@@ -4,67 +4,143 @@ using CardGames.Core;
 using CardGames.Blackjack;
 using CardGames.Simulation;
 
-internal class Program
+namespace CardGames
 {
-    private static void Main(string[] args)
+    /// <summary>
+    /// Main program for the Card Games application
+    /// </summary>
+    public class Program
     {
-        Console.WriteLine("Welcome to Blackjack AI Demo!");
-        Console.WriteLine();
-
-        // Set up strategies
-        IStrategy conservativeStrategy = new ConservativeStrategy();
-        IStrategy aggressiveStrategy = new AggressiveStrategy();
-        IStrategy superAggressiveStrategy = new SuperAggressiveStrategy();
-        IStrategy basicStrategy = new BasicStrategy();
-        IStrategy[] strategies = { conservativeStrategy, aggressiveStrategy, superAggressiveStrategy, basicStrategy };
-
-        // Demo 1: Traditional gameplay (few rounds with output)
-        Console.WriteLine("=== DEMO 1: Traditional Gameplay ===");
-        RunTraditionalDemo(strategies);
-
-        Console.WriteLine("\n" + new string('=', 60) + "\n");
-
-        // Demo 2: Small simulation (10 rounds with verbose output)
-        Console.WriteLine("=== DEMO 2: Small Simulation (Verbose) ===");
-        RunSmallSimulation(strategies);
-
-        Console.WriteLine("\n" + new string('=', 60) + "\n");
-
-        // Demo 3: Large simulation (1000 rounds for statistical analysis)
-        Console.WriteLine("=== DEMO 3: Large Simulation (Statistical Analysis) ===");
-        RunLargeSimulation(strategies);
-
-        Console.WriteLine("\nPress any key to exit...");
-        Console.ReadKey();
-    }
-
-    private static void RunTraditionalDemo(IStrategy[] strategies)
-    {
-        // Create and initialize the game
-        Blackjack game = new Blackjack();
-        game.SetupParticipants(strategies.Length, strategies);
-        
-        // Play a few rounds
-        for (int round = 1; round <= 3; round++)
+        // Registry of available card game factories
+        private static readonly List<ICardGameFactory> GameFactories = new List<ICardGameFactory>
         {
-            Console.WriteLine($"\n--- Round {round} ---");
-            game.InitializeGame();
-            game.PlayRound();
-            game.DetermineWinners();
+            new BlackjackGameFactory(),
+            // Add new game factories here when implemented
+            // Example: new PokerGameFactory()
+        };
+
+        private static void Main(string[] args)
+        {
+            Console.WriteLine("Welcome to Card Games AI Demo!");
+            Console.WriteLine();
+
+            // Select a game factory to use
+            ICardGameFactory selectedGameFactory = SelectGameFactory();
+
+            if (selectedGameFactory == null)
+            {
+                Console.WriteLine("No game selected. Exiting...");
+                return;
+            }
+
+            // Create strategies for the selected game
+            IStrategy[] strategies = selectedGameFactory.CreateDefaultStrategies();
+
+            Console.WriteLine($"\nSelected Game: {selectedGameFactory.GameName}");
+            Console.WriteLine($"Using strategies: {string.Join(", ", Array.ConvertAll(strategies, s => s.Name))}");
+            Console.WriteLine();
+
+            // Run the demos
+            RunGameDemos(selectedGameFactory, strategies);
+
+            Console.WriteLine("\nPress any key to exit...");
+            Console.ReadKey();
         }
-    }
 
-    private static void RunSmallSimulation(IStrategy[] strategies)
-    {
-        var simulation = new BlackjackSimulation(strategies, verboseOutput: true);
-        var result = simulation.RunSimulation(10);
-        simulation.DisplaySimulationSummary(result);
-    }
+        /// <summary>
+        /// Presents a menu to select a game factory
+        /// </summary>
+        private static ICardGameFactory SelectGameFactory()
+        {
+            if (GameFactories.Count == 0)
+            {
+                Console.WriteLine("No card games are available.");
+                return null;
+            }
 
-    private static void RunLargeSimulation(IStrategy[] strategies)
-    {
-        var simulation = new BlackjackSimulation(strategies, verboseOutput: false);
-        var result = simulation.RunSimulation(1000);
-        simulation.DisplaySimulationSummary(result);
+            // If there's only one game, select it automatically
+            if (GameFactories.Count == 1)
+            {
+                return GameFactories[0];
+            }
+
+            // Display menu of available games
+            Console.WriteLine("Available Card Games:");
+            for (int i = 0; i < GameFactories.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {GameFactories[i].GameName}");
+            }
+
+            Console.Write("\nSelect a game (enter number): ");
+            if (int.TryParse(Console.ReadLine(), out int selection) && 
+                selection > 0 && selection <= GameFactories.Count)
+            {
+                return GameFactories[selection - 1];
+            }
+
+            Console.WriteLine("Invalid selection. Using default game (Blackjack).");
+            return GameFactories[0]; // Default to the first game (Blackjack)
+        }
+
+        /// <summary>
+        /// Runs the three demo modes for the selected game
+        /// </summary>
+        private static void RunGameDemos(ICardGameFactory gameFactory, IStrategy[] strategies)
+        {
+            // Demo 1: Traditional gameplay (few rounds with output)
+            Console.WriteLine($"=== DEMO 1: Traditional {gameFactory.GameName} Gameplay ===");
+            RunTraditionalDemo(gameFactory, strategies);
+
+            Console.WriteLine("\n" + new string('=', 60) + "\n");
+
+            // Demo 2: Small simulation (10 rounds with verbose output)
+            Console.WriteLine($"=== DEMO 2: Small {gameFactory.GameName} Simulation (Verbose) ===");
+            RunSmallSimulation(gameFactory, strategies);
+
+            Console.WriteLine("\n" + new string('=', 60) + "\n");
+
+            // Demo 3: Large simulation (1000 rounds for statistical analysis)
+            Console.WriteLine($"=== DEMO 3: Large {gameFactory.GameName} Simulation (Statistical Analysis) ===");
+            RunLargeSimulation(gameFactory, strategies);
+        }
+
+        /// <summary>
+        /// Runs a traditional gameplay demo with the selected game
+        /// </summary>
+        private static void RunTraditionalDemo(ICardGameFactory gameFactory, IStrategy[] strategies)
+        {
+            // Create and initialize the game
+            CardGame game = gameFactory.CreateGame();
+            game.SetupParticipants(strategies.Length, strategies);
+            
+            // Play a few rounds
+            for (int round = 1; round <= 3; round++)
+            {
+                Console.WriteLine($"\n--- Round {round} ---");
+                game.InitializeGame();
+                game.PlayRound();
+                game.DetermineWinners();
+            }
+        }
+
+        /// <summary>
+        /// Runs a small simulation with verbose output
+        /// </summary>
+        private static void RunSmallSimulation(ICardGameFactory gameFactory, IStrategy[] strategies)
+        {
+            var simulation = new CardGameSimulation(gameFactory, strategies, verboseOutput: true);
+            var result = simulation.RunSimulation(10);
+            simulation.DisplaySimulationSummary(result);
+        }
+
+        /// <summary>
+        /// Runs a large simulation for statistical analysis
+        /// </summary>
+        private static void RunLargeSimulation(ICardGameFactory gameFactory, IStrategy[] strategies)
+        {
+            var simulation = new CardGameSimulation(gameFactory, strategies, verboseOutput: false);
+            var result = simulation.RunSimulation(1000);
+            simulation.DisplaySimulationSummary(result);
+        }
     }
 }
