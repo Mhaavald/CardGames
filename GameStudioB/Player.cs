@@ -10,6 +10,7 @@ namespace GameStudioB
         public bool HasStood { get; set; } = false;
         public bool IsBusted => CalculateHandValue() > 21;
         public bool HasBlackjack => Hand.Count == 2 && CalculateHandValue() == 21;
+        public IStrategy? Strategy { get; set; }
 
         public Player(string name, bool isDealer = false)
         {
@@ -86,6 +87,24 @@ namespace GameStudioB
                 // Only show the value of the visible card for the dealer
                 System.Console.WriteLine($"Visible card value: {(Hand.Count > 1 ? Hand[1].GetBlackjackValue() : 0)}");
             }
+        }
+        
+        public bool DecideAction(Player dealer)
+        {
+            if (Strategy != null)
+            {
+                return Strategy.DecideToHit(this, dealer);
+            }
+            
+            // Default dealer strategy if no other strategy is set
+            if (IsDealer)
+            {
+                // Standard dealer rules: hit on 16 or less, stand on 17 or more
+                return CalculateHandValue() < 17;
+            }
+            
+            // Should not reach here in normal gameplay
+            return false;
         }
     }
 }
