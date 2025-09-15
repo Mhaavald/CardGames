@@ -87,25 +87,61 @@ namespace CardGames
         }
 
         /// <summary>
-        /// Runs the three demo modes for the selected game
+        /// Runs the demo modes for the selected game
         /// </summary>
         private static void RunGameDemos(ICardGameFactory gameFactory, IStrategy[] strategies)
         {
-            // Demo 1: Traditional gameplay (few rounds with output)
-            Console.WriteLine($"=== DEMO 1: Traditional {gameFactory.GameName} Gameplay ===");
-            RunTraditionalDemo(gameFactory, strategies);
-
-            Console.WriteLine("\n" + new string('=', 60) + "\n");
-
-            // Demo 2: Small simulation (10 rounds with verbose output)
-            Console.WriteLine($"=== DEMO 2: Small {gameFactory.GameName} Simulation (Verbose) ===");
-            RunSmallSimulation(gameFactory, strategies);
-
-            Console.WriteLine("\n" + new string('=', 60) + "\n");
-
-            // Demo 3: Large simulation (1000 rounds for statistical analysis)
-            Console.WriteLine($"=== DEMO 3: Large {gameFactory.GameName} Simulation (Statistical Analysis) ===");
-            RunLargeSimulation(gameFactory, strategies);
+            bool exitDemos = false;
+            
+            while (!exitDemos)
+            {
+                Console.WriteLine("\nDemo Options:");
+                Console.WriteLine("1. Traditional Gameplay (few rounds with output)");
+                Console.WriteLine("2. Small Simulation (10 rounds with verbose output)");
+                Console.WriteLine("3. Large Simulation (1000 rounds for statistical analysis)");
+                Console.WriteLine("4. Time-based Simulation (1 minute)");
+                Console.WriteLine("5. Exit Demo");
+                
+                Console.Write("\nSelect an option (enter number): ");
+                string input = Console.ReadLine()?.Trim() ?? "";
+                
+                Console.WriteLine();
+                
+                switch (input)
+                {
+                    case "1":
+                        Console.WriteLine($"=== DEMO 1: Traditional {gameFactory.GameName} Gameplay ===");
+                        RunTraditionalDemo(gameFactory, strategies);
+                        break;
+                    case "2":
+                        Console.WriteLine($"=== DEMO 2: Small {gameFactory.GameName} Simulation (Verbose) ===");
+                        RunSmallSimulation(gameFactory, strategies);
+                        break;
+                    case "3":
+                        Console.WriteLine($"=== DEMO 3: Large {gameFactory.GameName} Simulation (Statistical Analysis) ===");
+                        RunLargeSimulation(gameFactory, strategies);
+                        break;
+                    case "4":
+                        Console.WriteLine($"=== DEMO 4: Time-based {gameFactory.GameName} Simulation (1 minute) ===");
+                        RunTimeBasedSimulation(gameFactory, strategies);
+                        break;
+                    case "5":
+                        exitDemos = true;
+                        break;
+                    default:
+                        Console.WriteLine("Invalid option. Please try again.");
+                        break;
+                }
+                
+                if (!exitDemos)
+                {
+                    Console.WriteLine("\n" + new string('=', 60));
+                    Console.WriteLine("Press any key to continue to next demo...");
+                    Console.ReadKey();
+                    Console.Clear();
+                    Console.WriteLine($"Selected Game: {gameFactory.GameName}");
+                }
+            }
         }
 
         /// <summary>
@@ -144,6 +180,16 @@ namespace CardGames
         {
             var simulation = new CardGameSimulation(gameFactory, strategies, verboseOutput: false);
             var result = simulation.RunSimulation(1000);
+            simulation.DisplaySimulationSummary(result);
+        }
+        
+        /// <summary>
+        /// Runs a time-based simulation for 1 minute
+        /// </summary>
+        private static void RunTimeBasedSimulation(ICardGameFactory gameFactory, IStrategy[] strategies)
+        {
+            var simulation = new CardGameSimulation(gameFactory, strategies, verboseOutput: false);
+            var result = simulation.RunTimeBasedSimulation(1); // 1 minute
             simulation.DisplaySimulationSummary(result);
         }
     }
