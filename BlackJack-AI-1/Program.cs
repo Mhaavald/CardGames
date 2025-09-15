@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using CardGames.Core;
 using CardGames.Blackjack;
+using CardGames.HighLow;
 using CardGames.Simulation;
 
 namespace CardGames
@@ -15,6 +16,7 @@ namespace CardGames
         private static readonly List<ICardGameFactory> GameFactories = new List<ICardGameFactory>
         {
             new BlackjackGameFactory(),
+            new HighLowGameFactory(),
             // Add new game factories here when implemented
             // Example: new PokerGameFactory()
         };
