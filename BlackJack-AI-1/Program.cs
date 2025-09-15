@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using CardGames.Core;
-using CardGames.Blackjack;
-using CardGames.HighLow;
-using CardGames.Rummy;
+using CardGames.GamesStudio.Games.Blackjack;
+using CardGames.GamesStudio.Games.HighLow;
+using CardGames.GamesStudio.Games.Rummy;
 using CardGames.Simulation;
 
 namespace CardGames
@@ -20,6 +20,7 @@ namespace CardGames
             new HighLowGameFactory(),
             new RummyGameFactory()
             // Add new game factories here when implemented
+            // Example: new PokerGameFactory()
         };
 
         private static void Main(string[] args)

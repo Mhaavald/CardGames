@@ -1,8 +1,6 @@
-using System;
-using System.Collections.Generic;
 using CardGames.Core;
 
-namespace CardGames.HighLow
+namespace CardGames.GamesStudio.Games.HighLow
 {
     /// <summary>
     /// Factory for creating High-Low games

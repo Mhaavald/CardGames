@@ -1,8 +1,6 @@
-using System;
-using System.Collections.Generic;
 using CardGames.Core;
 
-namespace CardGames.Blackjack
+namespace CardGames.GamesStudio.Games.Blackjack
 {
     /// <summary>
     /// Factory for creating Blackjack games

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using CardGames.Core;
 using CardGames.Simulation;
 
-namespace CardGames.Blackjack
+namespace CardGames.GamesStudio.Games.Blackjack
 {
     public class Blackjack : CardGame, IGameResults
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CardGames.Core;
 
-namespace CardGames.Rummy
+namespace CardGames.GamesStudio.Games.Rummy
 {
     /// <summary>
     /// Represents a set (3 or 4 cards of the same rank)

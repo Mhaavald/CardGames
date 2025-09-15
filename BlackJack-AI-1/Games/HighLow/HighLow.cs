@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using CardGames.Core;
 using CardGames.Simulation;
 
-namespace CardGames.HighLow
+namespace CardGames.GamesStudio.Games.HighLow
 {
     /// <summary>
     /// Implementation of High-Low card game
@@ -118,7 +118,7 @@ namespace CardGames.HighLow
                 else
                 {
                     bool isHigher = nextValue > currentValue;
-                    result.Outcome = (isHigher == result.PredictedHigher) ? GuessOutcome.Correct : GuessOutcome.Incorrect;
+                    result.Outcome = isHigher == result.PredictedHigher ? GuessOutcome.Correct : GuessOutcome.Incorrect;
                 }
                 
                 // For simulation purposes, add the next card to the participant's hand

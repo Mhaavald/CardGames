@@ -1,7 +1,7 @@
 using System;
 using CardGames.Core;
 
-namespace CardGames.HighLow
+namespace CardGames.GamesStudio.Games.HighLow
 {
     /// <summary>
     /// Interface for strategies specific to the High-Low game

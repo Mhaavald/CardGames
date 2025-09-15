@@ -32,8 +32,8 @@ namespace CardGames.Core
             // This logic is handled in the Blackjack.ProcessDealerTurn method
             // This method won't be directly called for the dealer in the current implementation
             // but is included for completeness
-            
-            if (context.Game is CardGames.Blackjack.Blackjack blackjackGame)
+
+            if (context.Game is CardGames.GamesStudio.Games.Blackjack.Blackjack blackjackGame)
             {
                 int handValue = blackjackGame.GetHandValue(participant);
                 

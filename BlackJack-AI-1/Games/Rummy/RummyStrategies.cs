@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CardGames.Core;
 
-namespace CardGames.Rummy
+namespace CardGames.GamesStudio.Games.Rummy
 {
     /// <summary>
     /// Base class for Rummy strategies that provides common functionality

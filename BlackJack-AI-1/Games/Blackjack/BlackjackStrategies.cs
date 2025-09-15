@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CardGames.Core;
 
-namespace CardGames.Blackjack
+namespace CardGames.GamesStudio.Games.Blackjack
 {
     // Blackjack-specific strategies
     public class ConservativeStrategy : IStrategy

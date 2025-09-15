@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using CardGames.Core;
 
-namespace CardGames.HighLow
+namespace CardGames.GamesStudio.Games.HighLow
 {
     /// <summary>
     /// Strategy that predicts higher if the current card value is low (1-6), lower if high (8-13)

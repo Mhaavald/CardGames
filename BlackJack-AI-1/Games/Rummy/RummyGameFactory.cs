@@ -1,8 +1,6 @@
-using System;
-using System.Collections.Generic;
 using CardGames.Core;
 
-namespace CardGames.Rummy
+namespace CardGames.GamesStudio.Games.Rummy
 {
     /// <summary>
     /// Factory for creating Rummy games

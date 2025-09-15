@@ -1,7 +1,7 @@
 using System;
 using CardGames.Core;
 
-namespace CardGames.Rummy
+namespace CardGames.GamesStudio.Games.Rummy
 {
     /// <summary>
     /// Interface for strategies specific to the Rummy game

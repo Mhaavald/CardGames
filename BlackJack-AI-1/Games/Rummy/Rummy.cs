@@ -4,7 +4,7 @@ using System.Linq;
 using CardGames.Core;
 using CardGames.Simulation;
 
-namespace CardGames.Rummy
+namespace CardGames.GamesStudio.Games.Rummy
 {
     /// <summary>
     /// Implementation of a Simple Rummy card game

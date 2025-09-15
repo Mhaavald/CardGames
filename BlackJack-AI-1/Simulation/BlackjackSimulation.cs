@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CardGames.Core;
+using CardGames.GamesStudio.Games.Blackjack;
 
 namespace CardGames.Simulation
 {
@@ -91,7 +92,7 @@ namespace CardGames.Simulation
         private RoundResult RunSingleRound(int roundNumber)
         {
             // Create and setup the game
-            var game = new CardGames.Blackjack.Blackjack();
+            var game = new CardGames.GamesStudio.Games.Blackjack.Blackjack();
             game.SetupParticipants(_strategies.Length, _strategies);
 
             // Play the round
