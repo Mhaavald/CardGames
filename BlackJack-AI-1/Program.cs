@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CardGames.Core;
 using CardGames.Blackjack;
 using CardGames.HighLow;
+using CardGames.Rummy;
 using CardGames.Simulation;
 
 namespace CardGames
@@ -17,8 +18,8 @@ namespace CardGames
         {
             new BlackjackGameFactory(),
             new HighLowGameFactory(),
+            new RummyGameFactory()
             // Add new game factories here when implemented
-            // Example: new PokerGameFactory()
         };
 
         private static void Main(string[] args)

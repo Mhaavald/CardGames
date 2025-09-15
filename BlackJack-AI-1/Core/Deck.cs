@@ -9,10 +9,26 @@ namespace CardGames.Core
     public class Deck
     {
         private Stack<Card> cards;
+        
+        /// <summary>
+        /// Number of cards remaining in the deck
+        /// </summary>
+        public int Count => cards.Count;
 
+        /// <summary>
+        /// Creates a new standard deck with the specified number of 52-card decks
+        /// </summary>
         public Deck(int numberOfDecks = 1)
         {
             InitializeDeck(numberOfDecks);
+        }
+        
+        /// <summary>
+        /// Creates a deck from an existing list of cards
+        /// </summary>
+        public Deck(List<Card> existingCards)
+        {
+            cards = new Stack<Card>(existingCards);
         }
 
         private void InitializeDeck(int numberOfDecks)
