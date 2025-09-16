@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using CardGames.Core;
+using CardGames.GamesStudio.Games.AceReset;
 using CardGames.GamesStudio.Games.Blackjack;
 using CardGames.GamesStudio.Games.HighLow;
 using CardGames.GamesStudio.Games.Rummy;
@@ -18,7 +19,8 @@ namespace CardGames
         {
             new BlackjackGameFactory(),
             new HighLowGameFactory(),
-            new RummyGameFactory()
+            new RummyGameFactory(),
+            new AceResetGameFactory()
             // Add new game factories here when implemented
             // Example: new PokerGameFactory()
         };
